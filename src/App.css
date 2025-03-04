@@ -10,14 +10,14 @@
 	--color-delete-sd: var(--delete-shadow);
 
 	--color-equal-bg: var(--equal-background);
-	--color-toggle: var(--toogle);
+	--color-toggle-btn: var(--toggle-btn);
 	--color-equal-sd: var(--equal-shadow);
 
 	--color-key-bg: var(--key-background);
 	--color-key-sd: var(--key-shadow);
 
-	--color-text: var(--text);
-	--color-text-white: var(--text-white);
+	--color-primary-color: var(--text-color);
+	--color-secondary-color: var(--text-white);
 }
 
 :root {
@@ -35,7 +35,7 @@
 
 	/* Equals Key */
 	--equal-background: hsl(6, 63%, 50%);
-	--toggle: hsl(6, 63%, 50%);
+	--toggle-btn: hsl(6, 63%, 50%);
 	--equal-shadow: hsl(6, 70%, 34%);
 
 	--key-background: hsl(30, 25%, 89%);
@@ -43,7 +43,7 @@
 
 	/* Text */
 
-	--text: hsl(221, 14%, 31%);
+	--text-color: hsl(221, 14%, 31%);
 	--text-white: hsl(0, 0%, 100%);
 }
 
@@ -61,7 +61,7 @@
 
 	/* Equals Key */
 	--equal-background: hsl(25, 98%, 40%);
-	--toggle: hsl(25, 98%, 40%);
+	--toggle-btn: hsl(25, 98%, 40%);
 	--equal-shadow: hsl(25, 99%, 27%);
 
 	--key-background: hsl(45, 7%, 89%);
@@ -69,7 +69,7 @@
 
 	/* Text */
 
-	--text: hsl(60, 10%, 19%);
+	--text-color: hsl(60, 10%, 19%);
 	--text-white: hsl(0, 0%, 100%);
 }
 
@@ -87,7 +87,7 @@
 
 	/* Equals Key */
 	--equal-background: hsl(176, 100%, 44%);
-	--toggle: hsl(176, 100%, 44%);
+	--toggle-btn: hsl(176, 100%, 44%);
 	--equal-shadow: hsl(177, 92%, 70%);
 
 	--key-background: hsl(268, 47%, 21%);
@@ -95,11 +95,16 @@
 
 	/* Text */
 
-	--text: hsl(52, 100%, 62%);
+	--text-color: hsl(52, 100%, 62%);
 	--text-white: hsl(0, 0%, 100%);
 	--text-black: hsl(198, 20%, 13%);
 }
 
 body {
 	font-family: "League Spartan";
+	line-height: 1;
+}
+
+button {
+	text-box-trim: trim-end;
 }
