@@ -1,4 +1,21 @@
+import { useContext, useState } from "react";
+import { ThemeContext } from "./ThemeContextProvider";
+
 export default function Calculator() {
+	const [activeToggle, setActiveToggle] = useState("firstToggle");
+	const { theme, setTheme } = useContext(ThemeContext);
+
+	const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+		const { id } = e.currentTarget;
+		setActiveToggle(id);
+	};
+
+	const togglePosition =
+		activeToggle === "secondToggle"
+			? "top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+			: activeToggle === "thirdToggle"
+			? "top-1/2 right-1 -translate-y-1/2"
+			: "top-1/2 left-1 -translate-y-1/2";
 	return (
 		<main className="w-full max-w-[33.9375rem]">
 			<header className="w-full flex items-end justify-between text-secondary-color font-bold mb-8">
@@ -11,8 +28,30 @@ export default function Calculator() {
 							<span>2</span>
 							<span>3</span>
 						</div>
-						<div className="bg-toggle-bg w-18 h-6 rounded-full relative">
-							<span className="block absolute top-1/2 left-1 -translate-y-1/2 bg-toggle-btn w-4 h-4 rounded-full"></span>
+						<div className="bg-toggle-bg w-18 h-6 rounded-full relative overflow-hidden">
+							<button
+								type="button"
+								className={`block absolute bg-toggle-btn w-4 h-4 rounded-full z-10 ${togglePosition} cursor-pointer transition-all duration-200 ease-in-out`}
+								onClick={(e) => handleToggle(e)}
+							></button>
+							<button
+								id="firstToggle"
+								type="button"
+								className="block absolute bg-transparent w-4 h-4 rounded-full top-1/2 left-1 -translate-y-1/2 cursor-pointer"
+								onClick={(e) => handleToggle(e)}
+							></button>
+							<button
+								id="secondToggle"
+								type="button"
+								className="block absolute bg-transparent w-4 h-4 rounded-full top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 cursor-pointer"
+								onClick={(e) => handleToggle(e)}
+							></button>
+							<button
+								id="thirdToggle"
+								type="button"
+								className="block absolute bg-transparent w-4 h-4 rounded-full top-1/2 right-1 -translate-y-1/2 cursor-pointer"
+								onClick={(e) => handleToggle(e)}
+							></button>
 						</div>
 					</div>
 				</div>
@@ -63,7 +102,7 @@ const Key = ({ value, reset = false, equal = false, del = false, className = "" 
 	return (
 		<button
 			type="button"
-			className={`${dynamicColor} ${className} px-4 flex items-center justify-center font-bold h-[3.75rem] rounded-[0.75rem]`}
+			className={`${dynamicColor} ${className} px-4 flex items-center justify-center font-bold h-[3.75rem] rounded-[0.75rem] cursor-pointer`}
 			style={{
 				boxShadow:
 					reset || del
