@@ -2,7 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "./ThemeContextProvider";
 
 export default function Calculator() {
-	const [activeToggle, setActiveToggle] = useState("firstToggle");
+	const [activeToggle, setActiveToggle] = useState(
+		localStorage.getItem("activeToggle") || "firstToggle"
+	);
 	const context = useContext(ThemeContext);
 	const { theme, setTheme } = context;
 
@@ -13,6 +15,7 @@ export default function Calculator() {
 	const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
 		const { id } = e.currentTarget;
 		setActiveToggle(id);
+		localStorage.setItem("activeToggle", id);
 
 		if (id === "firstToggle") setTheme("theme-1");
 		if (id === "secondToggle") setTheme("theme-2");
@@ -26,7 +29,7 @@ export default function Calculator() {
 			? "right-1"
 			: "left-1";
 	return (
-		<main className="w-full max-w-[33.9375rem]">
+		<main className="w-full max-w-[33.9375rem] max-md:px-6">
 			<header className="w-full flex items-end justify-between text-[var(--text-secondary)] font-bold mb-8">
 				<h3 className="text-[2rem]">calc</h3>
 				<div className="flex items-end gap-6">
@@ -65,10 +68,10 @@ export default function Calculator() {
 					</div>
 				</div>
 			</header>
-			<section className="w-full bg-[var(--screen-background)] text-[var(--text-secondary)] h-32 rounded-[10px] flex flex-col items-end justify-center px-8 mb-10">
-				<h1 className="text-[4rem] font-bold">399,981</h1>
+			<section className="w-full bg-[var(--screen-background)] text-[var(--text-secondary)] rounded-[10px] flex flex-col items-end justify-center p-8 max-md:p-6 mb-10 max-md:mb-6">
+				<h1 className="text-[4rem] max-md:text-[2.5rem] font-bold">399,981</h1>
 			</section>
-			<section className="w-full p-10 bg-[var(--keypad-background)] rounded-[0.625rem] grid grid-cols-4 gap-7">
+			<section className="w-full max-md:p-6 p-10 bg-[var(--keypad-background)] rounded-[0.625rem] grid grid-cols-4 gap-7 max-md:gap-4">
 				<Key value={7} />
 				<Key value={8} />
 				<Key value={9} />
@@ -102,16 +105,16 @@ type ValueProps = {
 
 const Key = ({ value, reset = false, equal = false, del = false, className = "" }: ValueProps) => {
 	const dynamicColor = reset
-		? "bg-[var(--delete-background)] text-[var(--text-quad)] text-[2rem]"
+		? "bg-[var(--delete-background)] text-[var(--text-quad)] text-[2rem] max-md:text-[1.2rem]"
 		: del
-		? "bg-[var(--delete-background)] text-[var(--text-quad)] text-[2rem]"
+		? "bg-[var(--delete-background)] text-[var(--text-quad)] text-[2rem] max-md:text-[1.2rem]"
 		: equal
-		? "bg-[var(--equal-background)] text-[var(--text-quad)] text-[2rem]"
-		: "bg-[var(--key-background)] text-[var(--text-tertiary)] text-[2.5rem]";
+		? "bg-[var(--equal-background)] text-[var(--text-quad)] text-[2rem] max-md:text-[1.2rem]"
+		: "bg-[var(--key-background)] text-[var(--text-tertiary)] text-[2.5rem] max-md:text-[1.8rem]";
 	return (
 		<button
 			type="button"
-			className={`${dynamicColor} ${className} px-4 flex items-center justify-center font-bold h-[3.75rem] rounded-[0.75rem] cursor-pointer`}
+			className={`${dynamicColor} ${className} px-4 flex items-center justify-center font-bold h-[3.75rem] rounded-[0.75rem] max-md:rounded-[0.5rem] cursor-pointer`}
 			style={{
 				boxShadow:
 					reset || del

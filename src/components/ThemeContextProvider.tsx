@@ -10,9 +10,7 @@ export const ThemeContext = createContext<ThemeContextType>({
 });
 
 export default function ThemeContextProvider({ children }: { children: React.ReactNode }) {
-	const [theme, setTheme] = useState(() => {
-		return localStorage.getItem("theme") ?? "theme-1";
-	});
+	const [theme, setTheme] = useState(localStorage.getItem("theme") || "theme-1");
 
 	useEffect(() => {
 		localStorage.setItem("theme", theme);
