@@ -1,24 +1,33 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "./ThemeContextProvider";
 
 export default function Calculator() {
 	const [activeToggle, setActiveToggle] = useState("firstToggle");
-	const { theme, setTheme } = useContext(ThemeContext);
+	const context = useContext(ThemeContext);
+	const { theme, setTheme } = context;
+
+	useEffect(() => {
+		document.body.className = theme;
+	}, [theme]);
 
 	const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
 		const { id } = e.currentTarget;
 		setActiveToggle(id);
+
+		if (id === "firstToggle") setTheme("theme-1");
+		if (id === "secondToggle") setTheme("theme-2");
+		if (id === "thirdToggle") setTheme("theme-3");
 	};
 
 	const togglePosition =
 		activeToggle === "secondToggle"
-			? "top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+			? "left-1/2 -translate-x-1/2"
 			: activeToggle === "thirdToggle"
-			? "top-1/2 right-1 -translate-y-1/2"
-			: "top-1/2 left-1 -translate-y-1/2";
+			? "right-1"
+			: "left-1";
 	return (
 		<main className="w-full max-w-[33.9375rem]">
-			<header className="w-full flex items-end justify-between text-secondary-color font-bold mb-8">
+			<header className="w-full flex items-end justify-between text-[var(--text-secondary)] font-bold mb-8">
 				<h3 className="text-[2rem]">calc</h3>
 				<div className="flex items-end gap-6">
 					<h2 className="text-sm">THEME</h2>
@@ -28,10 +37,10 @@ export default function Calculator() {
 							<span>2</span>
 							<span>3</span>
 						</div>
-						<div className="bg-toggle-bg w-18 h-6 rounded-full relative overflow-hidden">
+						<div className="bg-[var(--toggle-background)] w-18 h-6 rounded-full relative overflow-hidden">
 							<button
 								type="button"
-								className={`block absolute bg-toggle-btn w-4 h-4 rounded-full z-10 ${togglePosition} cursor-pointer transition-all duration-200 ease-in-out`}
+								className={`block absolute bg-[var(--toggle-btn)] w-4 h-4 rounded-full z-10 top-1/2 -translate-y-1/2 ${togglePosition} cursor-pointer transition-all duration-200 ease-in-out`}
 								onClick={(e) => handleToggle(e)}
 							></button>
 							<button
@@ -56,10 +65,10 @@ export default function Calculator() {
 					</div>
 				</div>
 			</header>
-			<section className="w-full bg-screen-bg text-secondary-color h-32 rounded-[10px] flex flex-col items-end justify-center px-8 mb-10">
+			<section className="w-full bg-[var(--screen-background)] text-[var(--text-secondary)] h-32 rounded-[10px] flex flex-col items-end justify-center px-8 mb-10">
 				<h1 className="text-[4rem] font-bold">399,981</h1>
 			</section>
-			<section className="w-full p-10 bg-keypad-bg rounded-[0.625rem] grid grid-cols-4 gap-7">
+			<section className="w-full p-10 bg-[var(--keypad-background)] rounded-[0.625rem] grid grid-cols-4 gap-7">
 				<Key value={7} />
 				<Key value={8} />
 				<Key value={9} />
@@ -93,12 +102,12 @@ type ValueProps = {
 
 const Key = ({ value, reset = false, equal = false, del = false, className = "" }: ValueProps) => {
 	const dynamicColor = reset
-		? "bg-delete-bg text-secondary-color text-[2rem]"
+		? "bg-[var(--delete-background)] text-[var(--text-quad)] text-[2rem]"
 		: del
-		? "bg-delete-bg text-secondary-color text-[2rem]"
+		? "bg-[var(--delete-background)] text-[var(--text-quad)] text-[2rem]"
 		: equal
-		? "bg-equal-bg text-secondary-color text-[2rem]"
-		: "bg-key-bg text-primary-color text-[2.5rem]";
+		? "bg-[var(--equal-background)] text-[var(--text-quad)] text-[2rem]"
+		: "bg-[var(--key-background)] text-[var(--text-tertiary)] text-[2.5rem]";
 	return (
 		<button
 			type="button"

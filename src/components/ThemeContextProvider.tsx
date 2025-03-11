@@ -4,15 +4,18 @@ type ThemeContextType = {
 	setTheme: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const ThemeContext = createContext<ThemeContextType | null>(null);
+export const ThemeContext = createContext<ThemeContextType>({
+	theme: "theme-1",
+	setTheme: () => {},
+});
 
 export default function ThemeContextProvider({ children }: { children: React.ReactNode }) {
 	const [theme, setTheme] = useState(() => {
-		return localStorage.getItem("theme-1") || "theme-2" || "theme-3";
+		return localStorage.getItem("theme") ?? "theme-1";
 	});
 
 	useEffect(() => {
-		return localStorage.setItem("theme-1", theme);
+		localStorage.setItem("theme", theme);
 	}, [theme]);
 
 	return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
