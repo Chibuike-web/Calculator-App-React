@@ -7,7 +7,7 @@ export default function Calculator() {
 	);
 	const context = useContext(ThemeContext);
 	const { theme, setTheme } = context;
-	const [display, setDisplay] = useState<string | number | null>(null);
+	const [display, setDisplay] = useState<(string | number)[]>([]);
 
 	useEffect(() => {
 		document.body.className = theme;
@@ -26,62 +26,58 @@ export default function Calculator() {
 	const handleClick = (value: string | number) => {
 		switch (value) {
 			case 1:
-				console.log(value);
-				setDisplay((prev) => (prev ? String(prev) + value : value));
+				setDisplay((prev) => [...prev, 1]);
 				break;
 			case 2:
-				setDisplay((prev) => (prev ? String(prev) + value : value));
-				console.log(value);
+				setDisplay((prev) => [...prev, 2]);
 				break;
 			case 3:
-				setDisplay((prev) => (prev ? String(prev) + value : value));
-				console.log(value);
+				setDisplay((prev) => [...prev, 3]);
 				break;
 			case 4:
-				setDisplay((prev) => (prev ? String(prev) + value : value));
-				console.log(value);
+				setDisplay((prev) => [...prev, 4]);
 				break;
 			case 5:
-				console.log(value);
+				setDisplay((prev) => [...prev, 5]);
 				break;
 			case 6:
-				console.log(value);
+				setDisplay((prev) => [...prev, 6]);
 				break;
 			case 7:
-				console.log(value);
+				setDisplay((prev) => [...prev, 7]);
 				break;
 			case 8:
-				console.log(value);
+				setDisplay((prev) => [...prev, 8]);
 				break;
 			case 9:
-				console.log(value);
+				setDisplay((prev) => [...prev, 9]);
 				break;
 			case 0:
-				console.log(value);
+				setDisplay((prev) => [...prev, 0]);
 				break;
 			case "+":
-				console.log(value);
+				setDisplay((prev) => [...prev, "+"]);
 				break;
 			case "-":
-				console.log(value);
+				setDisplay((prev) => [...prev, "-"]);
 				break;
 			case "/":
-				console.log(value);
+				setDisplay((prev) => [...prev, "/"]);
 				break;
 			case "x":
-				console.log(value);
+				setDisplay((prev) => [...prev, "x"]);
 				break;
 			case ".":
-				console.log(value);
+				setDisplay((prev) => [...prev, "."]);
 				break;
 			case "RESET":
-				console.log(value);
+				setDisplay([]);
 				break;
 			case "=":
-				console.log(value);
+				// setDisplay((prev) => (prev ? String(prev) + value : value));
 				break;
 			case "DEL":
-				console.log(value);
+				setDisplay((prev) => prev?.slice(0, -1));
 				break;
 		}
 	};
@@ -133,8 +129,10 @@ export default function Calculator() {
 					</div>
 				</div>
 			</header>
-			<section className="w-full bg-[var(--screen-background)] text-[var(--text-secondary)] rounded-[10px] flex flex-col items-end justify-center px-8 min-h-[128px] max-md:px-6 max-md:min-h-[88px] mb-10 max-md:mb-6">
-				<h1 className="text-[4rem] max-md:text-[2.5rem] font-bold ">{display}</h1>
+			<section className="w-full overflow-x-hidden bg-[var(--screen-background)] text-[var(--text-secondary)] rounded-[10px] flex flex-col items-end justify-center px-8 min-h-[128px] max-md:px-6 max-md:min-h-[88px] mb-10 max-md:mb-6">
+				<h1 className="text-[4rem] max-md:text-[2.5rem] font-bold text-right text-nowrap">
+					{display}
+				</h1>
 			</section>
 			<section className="w-full max-md:p-6 p-10 bg-[var(--keypad-background)] rounded-[0.625rem] grid grid-cols-4 gap-7 max-md:gap-4">
 				<Key value={7} handleClick={handleClick} />
