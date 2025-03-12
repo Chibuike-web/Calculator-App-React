@@ -7,6 +7,7 @@ export default function Calculator() {
 	);
 	const context = useContext(ThemeContext);
 	const { theme, setTheme } = context;
+	const [display, setDisplay] = useState<string | number | null>(null);
 
 	useEffect(() => {
 		document.body.className = theme;
@@ -22,12 +23,76 @@ export default function Calculator() {
 		if (id === "thirdToggle") setTheme("theme-3");
 	};
 
+	const handleClick = (value: string | number) => {
+		switch (value) {
+			case 1:
+				console.log(value);
+				setDisplay((prev) => (prev ? String(prev) + value : value));
+				break;
+			case 2:
+				setDisplay((prev) => (prev ? String(prev) + value : value));
+				console.log(value);
+				break;
+			case 3:
+				setDisplay((prev) => (prev ? String(prev) + value : value));
+				console.log(value);
+				break;
+			case 4:
+				setDisplay((prev) => (prev ? String(prev) + value : value));
+				console.log(value);
+				break;
+			case 5:
+				console.log(value);
+				break;
+			case 6:
+				console.log(value);
+				break;
+			case 7:
+				console.log(value);
+				break;
+			case 8:
+				console.log(value);
+				break;
+			case 9:
+				console.log(value);
+				break;
+			case 0:
+				console.log(value);
+				break;
+			case "+":
+				console.log(value);
+				break;
+			case "-":
+				console.log(value);
+				break;
+			case "/":
+				console.log(value);
+				break;
+			case "x":
+				console.log(value);
+				break;
+			case ".":
+				console.log(value);
+				break;
+			case "RESET":
+				console.log(value);
+				break;
+			case "=":
+				console.log(value);
+				break;
+			case "DEL":
+				console.log(value);
+				break;
+		}
+	};
+
 	const togglePosition =
 		activeToggle === "secondToggle"
 			? "left-1/2 -translate-x-1/2"
 			: activeToggle === "thirdToggle"
 			? "right-1"
 			: "left-1";
+
 	return (
 		<main className="w-full max-w-[33.9375rem] max-md:px-6">
 			<header className="w-full flex items-end justify-between text-[var(--text-secondary)] font-bold mb-8">
@@ -68,28 +133,28 @@ export default function Calculator() {
 					</div>
 				</div>
 			</header>
-			<section className="w-full bg-[var(--screen-background)] text-[var(--text-secondary)] rounded-[10px] flex flex-col items-end justify-center p-8 max-md:p-6 mb-10 max-md:mb-6">
-				<h1 className="text-[4rem] max-md:text-[2.5rem] font-bold">399,981</h1>
+			<section className="w-full bg-[var(--screen-background)] text-[var(--text-secondary)] rounded-[10px] flex flex-col items-end justify-center px-8 min-h-[128px] max-md:px-6 max-md:min-h-[88px] mb-10 max-md:mb-6">
+				<h1 className="text-[4rem] max-md:text-[2.5rem] font-bold ">{display}</h1>
 			</section>
 			<section className="w-full max-md:p-6 p-10 bg-[var(--keypad-background)] rounded-[0.625rem] grid grid-cols-4 gap-7 max-md:gap-4">
-				<Key value={7} />
-				<Key value={8} />
-				<Key value={9} />
-				<Key value="DEL" del />
-				<Key value={4} />
-				<Key value={5} />
-				<Key value={6} />
-				<Key value="+" />
-				<Key value={1} />
-				<Key value={2} />
-				<Key value={3} />
-				<Key value="-" />
-				<Key value="." />
-				<Key value={0} />
-				<Key value="/" />
-				<Key value="x" />
-				<Key value="RESET" reset className="col-span-2" />
-				<Key value="=" equal className="col-span-2" />
+				<Key value={7} handleClick={handleClick} />
+				<Key value={8} handleClick={handleClick} />
+				<Key value={9} handleClick={handleClick} />
+				<Key value="DEL" del handleClick={handleClick} />
+				<Key value={4} handleClick={handleClick} />
+				<Key value={5} handleClick={handleClick} />
+				<Key value={6} handleClick={handleClick} />
+				<Key value="+" handleClick={handleClick} />
+				<Key value={1} handleClick={handleClick} />
+				<Key value={2} handleClick={handleClick} />
+				<Key value={3} handleClick={handleClick} />
+				<Key value="-" handleClick={handleClick} />
+				<Key value="." handleClick={handleClick} />
+				<Key value={0} handleClick={handleClick} />
+				<Key value="/" handleClick={handleClick} />
+				<Key value="x" handleClick={handleClick} />
+				<Key value="RESET" reset className="col-span-2" handleClick={handleClick} />
+				<Key value="=" equal className="col-span-2" handleClick={handleClick} />
 			</section>
 		</main>
 	);
@@ -101,9 +166,17 @@ type ValueProps = {
 	equal?: boolean;
 	del?: boolean;
 	className?: string;
+	handleClick: (value: string | number) => void;
 };
 
-const Key = ({ value, reset = false, equal = false, del = false, className = "" }: ValueProps) => {
+const Key = ({
+	value,
+	reset = false,
+	equal = false,
+	del = false,
+	className = "",
+	handleClick,
+}: ValueProps) => {
 	const dynamicColor = reset
 		? "bg-[var(--delete-background)] text-[var(--text-quad)] text-[2rem] max-md:text-[1.2rem]"
 		: del
@@ -114,7 +187,7 @@ const Key = ({ value, reset = false, equal = false, del = false, className = "" 
 	return (
 		<button
 			type="button"
-			className={`${dynamicColor} ${className} px-4 flex items-center justify-center font-bold h-[3.75rem] rounded-[0.75rem] max-md:rounded-[0.5rem] cursor-pointer`}
+			className={`${dynamicColor} ${className} px-4 flex items-center justify-center font-bold h-[3.75rem] rounded-[0.75rem] max-md:rounded-[0.25rem] cursor-pointer`}
 			style={{
 				boxShadow:
 					reset || del
@@ -123,6 +196,7 @@ const Key = ({ value, reset = false, equal = false, del = false, className = "" 
 						? "0px 0.25rem 0px var(--equal-shadow)"
 						: "0px 0.25rem 0px var(--key-shadow)",
 			}}
+			onClick={() => handleClick(value)}
 		>
 			{value}
 		</button>
