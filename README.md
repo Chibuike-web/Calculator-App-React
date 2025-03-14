@@ -1,54 +1,69 @@
-# React + TypeScript + Vite
+# Frontend Mentor - Calculator app solution
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Overview
 
-Currently, two official plugins are available:
+This is a **modern and responsive calculator app** built with **React Typescript + Vite**. It provides a clean and intuitive interface for performing basic arithmetic operations with ease. The app includes multiple themes, an interactive keypad, and smooth calculations, making it a great tool for everyday use.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+### 🖩 Elegant Calculator Interface
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- A sleek and modern calculator with a **dark-themed UI**.
+- Well-spaced **responsive buttons** for easy usability.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 🎨 Theme Selection
+
+- Switch between **multiple themes** using the toggle switch.
+- Enjoy a customizable look that suits your preference.
+
+### 🔢 Functional Keypad
+
+- Supports **basic arithmetic operations** (`+`, `-`, `×`, `/`).
+- Includes **decimal point (.)** support.
+- **Delete (DEL)** key for quick corrections.
+- **Reset (RESET)** button to clear the display.
+
+### ⚡ Instant Calculation
+
+- Displays **real-time expressions** as you type.
+- `=` button evaluates expressions with smooth calculations.
+
+## 🛠️ Technologies Used
+
+- **React** (UI framework)
+- **Vite** (Fast build tool)
+- **Typescript**
+- **TailwindCSS v4.0** (Styling)
+
+## 💻 Setup & Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/Chibuike-web/Calculator-App-React.git
+   cd Tip-Calculator-App
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+4. Open [localhost:5173](http://localhost:5173) in your browser.
+
+## 📦 Build for Production
+
+To create an optimized build:
+
+```sh
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+This generates a **dist/** folder with the production-ready files.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🤝 Contributing
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Feel free to fork this repository and submit a **pull request** if you’d like to contribute!
+
+**Created by [Chibuike-web](https://github.com/Chibuike-web)**

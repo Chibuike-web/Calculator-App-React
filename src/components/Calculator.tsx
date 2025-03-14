@@ -26,63 +26,11 @@ export default function Calculator() {
 	function calc(array: (string | number)[]): number {
 		if (array.length === 0) throw new Error("Empty array not allowed");
 
-		// First pass: Consolidate numbers
-		const consolidatedTokens: (string | number)[] = [];
-		let currentNumber = "";
+		// Convert array to a valid expression string
+		let expression = array.join("").replace(/x/g, "*");
 
-		for (const item of array) {
-			const token = String(item).trim();
-
-			if (token === "" || token === " ") continue;
-
-			// If it's a digit or decimal point, add to current number
-			if (/^[0-9.]$/.test(token)) {
-				currentNumber += token;
-			} else if (["+", "-", "*", "/", "x"].includes(token)) {
-				// If we have a current number being built, push it first
-				if (currentNumber !== "") {
-					consolidatedTokens.push(parseFloat(currentNumber));
-					currentNumber = "";
-				}
-				consolidatedTokens.push(token);
-			} else {
-				throw new Error(`Invalid token: ${token}`);
-			}
-		}
-
-		// Don't forget the last number if there is one
-		if (currentNumber !== "") {
-			consolidatedTokens.push(parseFloat(currentNumber));
-		}
-
-		// Second pass: Calculate the result
-		let result: number | null = null;
-		let operator: string | null = null;
-
-		for (const token of consolidatedTokens) {
-			if (typeof token === "number") {
-				if (result === null) {
-					result = token;
-				} else if (operator === "+") {
-					result += token;
-				} else if (operator === "-") {
-					result -= token;
-				} else if (operator === "*" || operator === "x") {
-					result *= token;
-				} else if (operator === "/") {
-					result /= token;
-				}
-				operator = null;
-			} else if (["+", "-", "*", "/", "x"].includes(token)) {
-				if (result === null) throw new Error("Expression cannot start with an operator");
-				operator = token;
-			}
-		}
-
-		if (operator !== null) throw new Error("Expression cannot end with an operator");
-		if (result === null) throw new Error("No valid numbers found");
-
-		return result;
+		// Use Function constructor for evaluation (safer than eval)
+		return new Function(`return ${expression}`)();
 	}
 
 	const handleClick = (value: string | number) => {
