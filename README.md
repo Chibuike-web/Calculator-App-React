@@ -40,7 +40,7 @@ This is a **modern and responsive calculator app** built with **React Typescript
 1. Clone the repository:
    ```sh
    git clone https://github.com/Chibuike-web/Calculator-App-React.git
-   cd Tip-Calculator-App
+   cd Calculator-App-React
    ```
 2. Install dependencies:
    ```sh
@@ -61,6 +61,10 @@ npm run build
 ```
 
 This generates a **dist/** folder with the production-ready files.
+
+## 🔗 Live Demo
+
+(https://calculator-app-react-chi.vercel.app/)
 
 ## 🤝 Contributing
 
