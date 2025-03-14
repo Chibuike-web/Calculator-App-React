@@ -23,60 +23,87 @@ export default function Calculator() {
 		if (id === "thirdToggle") setTheme("theme-3");
 	};
 
+	function calc(array: (string | number)[]): number {
+		if (array.length === 0) throw new Error("Empty array not allowed");
+
+		// First pass: Consolidate numbers
+		const consolidatedTokens: (string | number)[] = [];
+		let currentNumber = "";
+
+		for (const item of array) {
+			const token = String(item).trim();
+
+			if (token === "" || token === " ") continue;
+
+			// If it's a digit or decimal point, add to current number
+			if (/^[0-9.]$/.test(token)) {
+				currentNumber += token;
+			} else if (["+", "-", "*", "/", "x"].includes(token)) {
+				// If we have a current number being built, push it first
+				if (currentNumber !== "") {
+					consolidatedTokens.push(parseFloat(currentNumber));
+					currentNumber = "";
+				}
+				consolidatedTokens.push(token);
+			} else {
+				throw new Error(`Invalid token: ${token}`);
+			}
+		}
+
+		// Don't forget the last number if there is one
+		if (currentNumber !== "") {
+			consolidatedTokens.push(parseFloat(currentNumber));
+		}
+
+		// Second pass: Calculate the result
+		let result: number | null = null;
+		let operator: string | null = null;
+
+		for (const token of consolidatedTokens) {
+			if (typeof token === "number") {
+				if (result === null) {
+					result = token;
+				} else if (operator === "+") {
+					result += token;
+				} else if (operator === "-") {
+					result -= token;
+				} else if (operator === "*" || operator === "x") {
+					result *= token;
+				} else if (operator === "/") {
+					result /= token;
+				}
+				operator = null;
+			} else if (["+", "-", "*", "/", "x"].includes(token)) {
+				if (result === null) throw new Error("Expression cannot start with an operator");
+				operator = token;
+			}
+		}
+
+		if (operator !== null) throw new Error("Expression cannot end with an operator");
+		if (result === null) throw new Error("No valid numbers found");
+
+		return result;
+	}
+
 	const handleClick = (value: string | number) => {
-		switch (value) {
-			case 1:
-				setDisplay((prev) => [...prev, 1]);
+		switch (true) {
+			case [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].includes(Number(value)):
+				setDisplay((prev) => [...prev, value]);
 				break;
-			case 2:
-				setDisplay((prev) => [...prev, 2]);
+
+			case ["+", "-", "/", "x"].includes(String(value)):
+				setDisplay((prev) => [...prev, String(value)]);
 				break;
-			case 3:
-				setDisplay((prev) => [...prev, 3]);
-				break;
-			case 4:
-				setDisplay((prev) => [...prev, 4]);
-				break;
-			case 5:
-				setDisplay((prev) => [...prev, 5]);
-				break;
-			case 6:
-				setDisplay((prev) => [...prev, 6]);
-				break;
-			case 7:
-				setDisplay((prev) => [...prev, 7]);
-				break;
-			case 8:
-				setDisplay((prev) => [...prev, 8]);
-				break;
-			case 9:
-				setDisplay((prev) => [...prev, 9]);
-				break;
-			case 0:
-				setDisplay((prev) => [...prev, 0]);
-				break;
-			case "+":
-				setDisplay((prev) => [...prev, "+"]);
-				break;
-			case "-":
-				setDisplay((prev) => [...prev, "-"]);
-				break;
-			case "/":
-				setDisplay((prev) => [...prev, "/"]);
-				break;
-			case "x":
-				setDisplay((prev) => [...prev, "x"]);
-				break;
-			case ".":
+			case value === ".":
 				setDisplay((prev) => [...prev, "."]);
 				break;
-			case "RESET":
+			case value === "RESET":
 				setDisplay([]);
 				break;
-			case "=":
-				// setDisplay((prev) => (prev ? String(prev) + value : value));
+			case value === "=":
+				setDisplay((prev) => [calc(prev)]);
 				break;
-			case "DEL":
+			case value === "DEL":
 				setDisplay((prev) => prev?.slice(0, -1));
 				break;
 		}
